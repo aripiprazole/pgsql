@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    ".huskyrc": "json",
+    "*.json": "jsonc",
+    "*.uidx": "jsonc",
+    "pqxx": "cpp"
+  }
+}
