@@ -24,4 +24,4 @@ target ffi.o pkg : FilePath := do
 extern_lib libleanpgsql pkg := do
   let name := nameToStaticLib "leanffi"
   let ffiO ← fetch <| pkg.target ``ffi.o
-  buildStaticLib (pkg.nativeLibDir / name) #[ffiO]
+  buildStaticLib (pkg.buildDir / "lib" / name) #[ffiO]
