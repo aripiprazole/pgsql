@@ -1,4 +1,4 @@
-import «Pgsql»
+import Pgsql
 
-def main : IO Unit :=
-  IO.println s!"Hello, {hello}!"
+def main : IO Unit := do
+  let conn ← Pgsql.connect "dbname=template1"

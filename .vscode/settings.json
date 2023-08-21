@@ -3,6 +3,11 @@
     ".huskyrc": "json",
     "*.json": "jsonc",
     "*.uidx": "jsonc",
-    "pqxx": "cpp"
+    "pqxx": "cpp",
+    "chrono": "cpp",
+    "optional": "cpp",
+    "format": "cpp",
+    "system_error": "cpp",
+    "__node_handle": "cpp"
   }
 }
