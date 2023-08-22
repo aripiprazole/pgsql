@@ -9,7 +9,7 @@ structure ResultSet where
   tuple  : Nat
 
 structure Value where
-  private value : String
+  value : String
 
 class FromResult (e : Type) where
   fromResult : ResultSet → Option e 
