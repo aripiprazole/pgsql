@@ -7,23 +7,9 @@ def main : IO Unit := do
     let res  ← Pgsql.exec conn "SELECT * FROM h;" #[]
 
     match res with
-    | Pgsql.Result.finished => IO.println "finished"
-    | Pgsql.Result.things c => do
-        let fields := c.fields
-        let tuples := c.tuples
-    
-        IO.println s!"Tuples {tuples} Fields {fields}"
-
-        for x in [0:fields.toNat] do
-          let name := c.field x.toUSize
-          IO.print s!"| {name} "
-
-        IO.print "\n-----------------\n"
-
-        for x in [0:tuples.toNat] do
-          for y in [0:fields.toNat] do
-            let name := c.value x.toUSize y.toUSize
-            IO.print s!"| {name}"
-          IO.print "\n"
-      
-    | Pgsql.Result.error  _ => IO.println "err"
+    | Except.error err => IO.println s!"error: {err}"
+    | Except.ok    set => 
+        for entry in set do
+          let id := entry.getText "id"
+          let name := entry.getText "name"
+          IO.println s!"Id {id}, name {name}"

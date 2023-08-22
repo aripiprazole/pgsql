@@ -7,9 +7,9 @@ def Connection : Type := Pgsql.Nonempty.type
 def Cursor : Type := Pgsql.Nonempty.type
 
 inductive Result where
-  | finished
-  | things (c: Cursor)
-  | error (s: String)
+  | ok
+  | tuples (c: Cursor)
+  | error  (s: String)
 
 @[extern "lean_pgsql_initialize"]
 opaque initPgsql : IO Unit
@@ -20,7 +20,7 @@ builtin_initialize initPgsql
 opaque connect : String → IO Connection
 
 @[extern "lean_pgsql_exec"]
-opaque exec : (s: @& Connection) → String → Array String → IO Result
+opaque execCursor : (s: @& Connection) → String → Array String → IO Result
 
 @[extern "lean_pgsql_cursor_fields"]
 opaque Cursor.fields : (s: @& Cursor) → USize

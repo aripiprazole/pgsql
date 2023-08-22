@@ -1,3 +1,0 @@
-/projects/Zweb/pgsql/pgsql/cmake-build-debug/CMakeFiles/pgsql.dir
-/projects/Zweb/pgsql/pgsql/cmake-build-debug/CMakeFiles/edit_cache.dir
-/projects/Zweb/pgsql/pgsql/cmake-build-debug/CMakeFiles/rebuild_cache.dir
