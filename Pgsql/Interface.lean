@@ -8,9 +8,27 @@ structure ResultSet where
   fields : Lean.HashMap String Nat
   tuple  : Nat
 
-def ResultSet.getText (result: ResultSet) (field: String) : Option String := do
+structure Value where
+  private value : String
+
+class FromResult (e : Type) where
+  fromResult : ResultSet → Option e 
+
+class FromValue (e : Type) where
+  fromValue : Value → Option e
+
+instance : FromValue String where
+  fromValue v := some v.value
+
+instance : FromValue Nat where
+  fromValue v := String.toNat? v.value
+
+def ResultSet.getValue (result: ResultSet) (field: String) : Option Value := do
   let res ← result.fields.find? field
-  some (result.cursor.value result.tuple.toUSize res.toUSize)
+  some $ Value.mk (result.cursor.value result.tuple.toUSize res.toUSize)
+  
+def ResultSet.get [FromValue e] (result: ResultSet) (field: String) : Option e :=
+  result.getValue field >>= FromValue.fromValue
 
 def exec (conn: Connection) (query: String) (params: Array String) : IO (Except String (Array ResultSet)) := do
   let result ← Pgsql.execCursor conn query params
