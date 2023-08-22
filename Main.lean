@@ -10,6 +10,6 @@ def main : IO Unit := do
     | Except.error err => IO.println s!"error: {err}"
     | Except.ok    set => 
         for entry in set do
-          let id := entry.getText "id"
-          let name := entry.getText "name"
+          let id: Option String := entry.get "id"
+          let name: Option String := entry.get "name"
           IO.println s!"Id {id}, name {name}"

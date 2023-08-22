@@ -12,7 +12,7 @@ lean_lib «Pgsql» {
 @[default_target]
 lean_exe «pgsql» {
   root := `Main,
-  moreLinkArgs := #["-lpq", "-Wl", "--no-undefined", "-lstdc++"]
+  moreLinkArgs := #["-lpq", "-Wl", "--no-undefined"]
 }
 
 target ffi.o pkg : FilePath := do

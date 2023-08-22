@@ -72,8 +72,10 @@ extern "C" lean_obj_res lean_pgsql_new(b_lean_obj_arg str) {
   PGconn *conn = PQconnectdb(options);
 
   if (PQstatus(conn) != CONNECTION_OK) {
+    auto err = PQerrorMessage(conn);
+    auto str = lean_mk_string(err);
     PQfinish(conn);
-    return lean_io_result_mk_error(lean_mk_io_error_other_error(1, lean_mk_string("cannot connect")));
+    return lean_io_result_mk_error(lean_mk_io_error_other_error(1, str));
   } else {
     return lean_io_result_mk_ok(box(conn));
   }
