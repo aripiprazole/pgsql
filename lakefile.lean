@@ -12,14 +12,14 @@ lean_lib «Pgsql» {
 @[default_target]
 lean_exe «pgsql» {
   root := `Main,
-  moreLinkArgs := #["-lpq", "-Wl", "--no-undefined"]
+  moreLinkArgs := #["-lpq", "-Wl", "--no-undefined", "-lstdc++"]
 }
 
 target ffi.o pkg : FilePath := do
   let oFile := pkg.buildDir / "pgsql" / "ffi.o"
   let srcJob ← inputFile <| pkg.dir / "pgsql" / "ffi.cpp"
-  let flags := #["-I", (← getLeanIncludeDir).toString, "-fPIC", "-I", "/usr/include/postgresql"]
-  buildO "pgsql.cpp" oFile srcJob flags "c++"
+  let flags := #["-I", (← getLeanIncludeDir).toString, "-fPIC", "-I", "/usr/include/postgresql", "-lstdc++"]
+  buildO "pgsql.cpp" oFile srcJob flags "g++"
 
 extern_lib libleanpgsql pkg := do
   let name := nameToStaticLib "leanffi"
